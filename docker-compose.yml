@@ -1,0 +1,31 @@
+version: '2'
+services:
+  orgproxy:
+    build:
+      context: .
+      dockerfile: AOChatProxy.Dockerfile
+      args:
+        proxy_version: 2.5
+    image: aochatproxy:latest
+    networks:
+      - orgbot
+    volumes:
+      - ./proxy.properties:/aochatproxy/config.properties
+
+  orgbot:
+    build:
+      context: .
+      dockerfile: Budabot.Dockerfile
+      args:
+        bot_version: 4
+    image: budabot:4
+    networks:
+      - orgbot
+    volumes:
+      - ./budabot.db:/budabot/data/budabot.db
+      - ./config.php:/budabot/conf/config.php
+    depends_on:
+      - orgproxy
+
+networks:
+        orgbot:
