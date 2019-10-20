@@ -28,4 +28,4 @@ services:
       - orgproxy
 
 networks:
-        orgbot:
+  orgbot:
